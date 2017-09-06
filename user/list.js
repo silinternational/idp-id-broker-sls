@@ -4,7 +4,7 @@ const AWS = require('aws-sdk');
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 const params = {
-  TableName: 'idp-id-broker.user'
+  TableName: process.env.TABLE_NAME,
 }
 
 module.exports.list = (event, context, callback) => {

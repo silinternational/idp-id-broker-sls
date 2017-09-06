@@ -24,7 +24,7 @@ module.exports.create = (event, context, callback) => {
     return;
   }
   const params = {
-    TableName: 'idp-id-broker.user',
+    TableName: process.env.TABLE_NAME,
     Item: {
       id: uuid.v1(),
       employee_id: data.employee_id,

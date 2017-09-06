@@ -17,6 +17,11 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource: "arn:aws:dynamodb:us-east-1:*:*"
+
+custom:
+  tableNamespace: ${env:IDP_NAME}.idp-id-broker.${opt:stage, self:provider.stage}
+  userTable: ${self:custom.tableNamespace}.user
+
 #      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
 #    - Effect: "Allow"
 #      Action:
@@ -44,6 +49,8 @@ provider:
 functions:
   userCreate:
     handler: user/create.create
+    environment:
+      TABLE_NAME: ${self:custom.userTable}
     events:
       - http:
           path: user
@@ -51,6 +58,8 @@ functions:
           cors: true
   userDelete:
     handler: user/delete.delete
+    environment:
+      TABLE_NAME: ${self:custom.userTable}
     events:
       - http:
           path: user/{id}
@@ -58,6 +67,8 @@ functions:
           cors: true
   userGet:
     handler: user/get.get
+    environment:
+      TABLE_NAME: ${self:custom.userTable}
     events:
       - http:
           path: user/{id}
@@ -65,6 +76,8 @@ functions:
           cors: true
   userList:
     handler: user/list.list
+    environment:
+      TABLE_NAME: ${self:custom.userTable}
     events:
       - http:
           path: user
@@ -72,6 +85,8 @@ functions:
           cors: true
   userUpdate:
     handler: user/update.update
+    environment:
+      TABLE_NAME: ${self:custom.userTable}
     events:
       - http:
           path: user/{id}
@@ -128,7 +143,7 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: 'idp-id-broker.user'
+        TableName: '${self:custom.userTable}'
 #    NewResource:
 #      Type: AWS::S3::Bucket
 #      Properties:
