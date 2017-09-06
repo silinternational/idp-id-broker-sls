@@ -1,7 +1,7 @@
 {
-  "name": "idp-id-broker",
+  "name": "idp-id-broker-sls",
   "dependencies": {
-    "aws-sdk": "^2.109.0",
+    "aws-sdk": "^2.110.0",
     "uuid": "^3.1.0"
   }
 }
