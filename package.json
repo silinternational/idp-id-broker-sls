@@ -1,7 +1,13 @@
 {
   "name": "idp-id-broker-sls",
+  "description": "API to abstract identity persistence in IdP-in-a-box solution, using the Serverless Framework",
   "dependencies": {
     "aws-sdk": "^2.110.0",
     "uuid": "^3.1.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/silinternational/idp-id-broker-sls"
   }
 }
