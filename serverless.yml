@@ -56,7 +56,7 @@ provider:
 
 functions:
   currentTime:
-    handler: handler.hello
+    handler: handler.currentTime
     events:
       - http:
           path: current-time
