@@ -63,6 +63,13 @@ functions:
           path: user
           method: post
           cors: true
+  get:
+    handler: user/get.get
+    events:
+      - http:
+          path: user/{id}
+          method: get
+          cors: true
   list:
     handler: user/list.list
     events:
