@@ -20,7 +20,6 @@ module.exports.create = (event, context, callback) => {
   }
   if (typeof data.employee_id !== 'string') {
     console.error('Validation failed: employee_id is not a string.');
-    console.error(data);
     callback(new Error('Could not create the user.'));
     return;
   }
