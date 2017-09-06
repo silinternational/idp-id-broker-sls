@@ -20,16 +20,17 @@ service: idp-id-broker
 provider:
   name: aws
   runtime: nodejs6.10
-
-# you can overwrite defaults here
-#  stage: dev
-#  region: us-east-1
-
-# you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:us-east-1:*:*"
 #      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
 #    - Effect: "Allow"
 #      Action:
@@ -55,12 +56,41 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  currentTime:
-    handler: handler.hello
+  create:
+    handler: user/create.create
     events:
       - http:
-          path: current-time
+          path: user
+          method: post
+          cors: true
+  delete:
+    handler: user/delete.delete
+    events:
+      - http:
+          path: user/{id}
+          method: delete
+          cors: true
+  get:
+    handler: user/get.get
+    events:
+      - http:
+          path: user/{id}
           method: get
+          cors: true
+  list:
+    handler: user/list.list
+    events:
+      - http:
+          path: user
+          method: get
+          cors: true
+  update:
+    handler: user/update.update
+    events:
+      - http:
+          path: user/{id}
+          method: put
+          cors: true
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
@@ -95,8 +125,24 @@ functions:
 #      variable2: value2
 
 # you can add CloudFormation resource templates here
-#resources:
-#  Resources:
+resources:
+  Resources:
+    UserDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: 'idp-id-broker.user'
 #    NewResource:
 #      Type: AWS::S3::Bucket
 #      Properties:
