@@ -114,7 +114,7 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: 'user'
+        TableName: 'idp-id-broker.user'
 #    NewResource:
 #      Type: AWS::S3::Bucket
 #      Properties:
