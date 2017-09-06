@@ -56,35 +56,35 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  create:
+  userCreate:
     handler: user/create.create
     events:
       - http:
           path: user
           method: post
           cors: true
-  delete:
+  userDelete:
     handler: user/delete.delete
     events:
       - http:
           path: user/{id}
           method: delete
           cors: true
-  get:
+  userGet:
     handler: user/get.get
     events:
       - http:
           path: user/{id}
           method: get
           cors: true
-  list:
+  userList:
     handler: user/list.list
     events:
       - http:
           path: user
           method: get
           cors: true
-  update:
+  userUpdate:
     handler: user/update.update
     events:
       - http:
