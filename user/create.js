@@ -6,10 +6,21 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 module.exports.create = (event, context, callback) => {
   const timestamp = new Date().getTime();
-  const data = JSON.pars(event.body);
+  if (typeof event.body === 'undefined') {
+    console.error('No request body found.');
+    callback(new Error('Could not create the user.'));
+    return;
+  }
+  const data = JSON.parse(event.body);
   
+  if (data === null) {
+    console.error('No JSON data found.');
+    callback(new Error('Could not create the user.'));
+    return;
+  }
   if (typeof data.employee_id !== 'string') {
     console.error('Validation failed: employee_id is not a string.');
+    console.error(data);
     callback(new Error('Could not create the user.'));
     return;
   }
@@ -38,7 +49,7 @@ module.exports.create = (event, context, callback) => {
     
     const response = {
       statusCode: 200,
-      body: JSON.stringify(results.Item)
+      body: JSON.stringify(result.Item)
     }
     callback(null, response);
   })
