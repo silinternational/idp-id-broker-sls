@@ -20,7 +20,7 @@ module.exports.get = (event, context, callback) => {
     }
     
     const response = {
-      statusCode: 200,
+      statusCode: result.Item ? 200 : 404,
       body: JSON.stringify(result.Item)
     };
     callback(null, response);
