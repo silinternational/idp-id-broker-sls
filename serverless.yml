@@ -20,16 +20,17 @@ service: idp-id-broker
 provider:
   name: aws
   runtime: nodejs6.10
-
-# you can overwrite defaults here
-#  stage: dev
-#  region: us-east-1
-
-# you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:us-east-1:*:*"
 #      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
 #    - Effect: "Allow"
 #      Action:
@@ -55,12 +56,13 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  currentTime:
-    handler: handler.currentTime
+  create:
+    handler: user/create.create
     events:
       - http:
-          path: current-time
-          method: get
+          path: user
+          method: post
+          cors: true
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
