@@ -8,7 +8,7 @@ module.exports.get = (event, context, callback) => {
   const params = {
     TableName: process.env.TABLE_NAME,
     Key: {
-      uuid: event.pathParameters.uuid
+      employee_id: event.pathParameters.employee_id
     }
   };
   
