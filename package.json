@@ -5,6 +5,9 @@
     "aws-sdk": "^2.110.0",
     "uuid": "^3.1.0"
   },
+  "engines": {
+    "node": ">=6.5.0 <7.0.0"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
