@@ -44,7 +44,7 @@ functions:
       TABLE_NAME: ${self:custom.userTable}
     events:
       - http:
-          path: user/{uuid}
+          path: user/{employee_id}
           method: delete
           cors: true
           private: true
@@ -55,7 +55,7 @@ functions:
       TABLE_NAME: ${self:custom.userTable}
     events:
       - http:
-          path: user/{uuid}
+          path: user/{employee_id}
           method: get
           cors: true
           private: true
@@ -77,7 +77,7 @@ functions:
       TABLE_NAME: ${self:custom.userTable}
     events:
       - http:
-          path: user/{uuid}
+          path: user/{employee_id}
           method: put
           cors: true
           private: true
@@ -90,11 +90,11 @@ resources:
       Properties:
         AttributeDefinitions:
           -
-            AttributeName: uuid
+            AttributeName: employee_id
             AttributeType: S
         KeySchema:
           -
-            AttributeName: uuid
+            AttributeName: employee_id
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1

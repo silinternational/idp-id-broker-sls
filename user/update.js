@@ -19,14 +19,21 @@ module.exports.update = (event, context, callback) => {
   }
   if (typeof data.employee_id !== 'string') {
     console.error('Validation failed: employee_id is not a string.');
-    callback(new Error('Could not update the user.'));
+    callback(null, {
+      statusCode: 422,
+      body: JSON.stringify({
+        "name": "Unprocessable entity",
+        "message": "Employee ID must be a string",
+        "code": 0,
+        "status": 422
+      })
+    });
     return;
   }
   const params = {
     TableName: process.env.TABLE_NAME,
     Item: {
-      uuid: event.pathParameters.uuid,
-      employee_id: data.employee_id,
+      employee_id: event.pathParameters.employee_id,
       first_name: data.first_name,
       last_name: data.last_name,
       display_name: data.display_name,
