@@ -1,6 +1,6 @@
 const errorNames = {
   400: 'Bad Request'
-  422: 'Unprocessable entity'
+  422: 'Unprocessable Entity'
   500: 'Internal Server Error'
 };
 
@@ -19,6 +19,7 @@ const returnError = (statusCode, error, callback) => {
 module.exports.returnError = returnError;
 
 const returnServerError = (error, callback) => {
+  console.error(error);
   returnError(500, error, callback);
 };
 
