@@ -7,7 +7,7 @@ module.exports.delete = (event, context, callback) => {
   const params = {
     TableName: process.env.TABLE_NAME,
     Key: {
-      id: event.pathParameters.id
+      uuid: event.pathParameters.uuid
     }
   };
   

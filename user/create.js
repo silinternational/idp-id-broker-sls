@@ -26,7 +26,7 @@ module.exports.create = (event, context, callback) => {
   const params = {
     TableName: process.env.TABLE_NAME,
     Item: {
-      id: uuid.v1(),
+      uuid: uuid.v1(),
       employee_id: data.employee_id,
       first_name: data.first_name,
       last_name: data.last_name,

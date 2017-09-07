@@ -25,7 +25,7 @@ module.exports.update = (event, context, callback) => {
   const params = {
     TableName: process.env.TABLE_NAME,
     Item: {
-      id: event.pathParameters.id,
+      uuid: event.pathParameters.uuid,
       employee_id: data.employee_id,
       first_name: data.first_name,
       last_name: data.last_name,
