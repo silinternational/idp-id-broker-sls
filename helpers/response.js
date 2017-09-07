@@ -1,9 +1,25 @@
-module.exports.returnError = (error, callback) => {
+const errorNames = {
+  400: 'Bad Request'
+  422: 'Unprocessable entity'
+  500: 'Internal Server Error'
+};
+
+const returnError = (statusCode, error, callback) => {
   const response = {
-    statusCode: 500,
-    body: JSON.stringify(error)
+    statusCode: statusCode,
+    body: JSON.stringify({
+      "name": errorNames[statusCode],
+      "message": error,
+      "code": 0,
+      "status": statusCode
+    })
   };
   callback(null, response);
+};
+module.exports.returnError = returnError;
+
+const returnServerError = (error, callback) => {
+  returnError(500, error, callback);
 };
 
 module.exports.returnItem = (item, callback) => {
@@ -13,3 +29,4 @@ module.exports.returnItem = (item, callback) => {
   };
   callback(null, response);
 };
+module.exports.returnServerError = returnServerError;

@@ -22,7 +22,7 @@ const returnUser = (employeeId, callback) => {
   getUser(employeeId, (error, user) => {
     if (error) {
       console.error(error);
-      response.returnError(error, callback);
+      response.returnServerError(error, callback);
     }
     response.returnItem(user, callback);
   });
