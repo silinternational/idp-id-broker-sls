@@ -19,7 +19,7 @@ provider:
       Resource: "arn:aws:dynamodb:us-east-1:*:*"
 
 custom:
-  namespace: ${env:IDP_NAME}.${self:service}.${opt:stage, self:provider.stage}
+  namespace: ${env:IDP_NAME}_${self:service}_${opt:stage, self:provider.stage}
   userTable: ${self:custom.namespace}.user
 
 functions:
