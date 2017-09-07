@@ -1,8 +1,8 @@
 'use strict';
 
 const AWS = require('aws-sdk');
-
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
+const response = require('../helpers/response.js');
 
 module.exports.get = (event, context, callback) => {
   const params = {
@@ -19,10 +19,6 @@ module.exports.get = (event, context, callback) => {
       return;
     }
     
-    const response = {
-      statusCode: result.Item ? 200 : 204,
-      body: JSON.stringify(result.Item)
-    };
-    callback(null, response);
+    response.returnItem(result.Item, callback);
   });
 }
