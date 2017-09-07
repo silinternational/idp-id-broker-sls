@@ -20,12 +20,12 @@ provider:
 
 custom:
   namespace: ${env:IDP_NAME}_${self:service}_${opt:stage, self:provider.stage}
-  userTable: ${self:custom.namespace}.user
+  userTable: ${self:custom.namespace}_user
 
 functions:
   userCreate:
     handler: user/create.create
-    name: ${self:custom.namespace}.userCreate
+    name: ${self:custom.namespace}_userCreate
     environment:
       TABLE_NAME: ${self:custom.userTable}
     events:
@@ -35,7 +35,7 @@ functions:
           cors: true
   userDelete:
     handler: user/delete.delete
-    name: ${self:custom.namespace}.userDelete
+    name: ${self:custom.namespace}_userDelete
     environment:
       TABLE_NAME: ${self:custom.userTable}
     events:
@@ -45,7 +45,7 @@ functions:
           cors: true
   userGet:
     handler: user/get.get
-    name: ${self:custom.namespace}.userGet
+    name: ${self:custom.namespace}_userGet
     environment:
       TABLE_NAME: ${self:custom.userTable}
     events:
@@ -55,7 +55,7 @@ functions:
           cors: true
   userList:
     handler: user/list.list
-    name: ${self:custom.namespace}.userList
+    name: ${self:custom.namespace}_userList
     environment:
       TABLE_NAME: ${self:custom.userTable}
     events:
@@ -65,7 +65,7 @@ functions:
           cors: true
   userUpdate:
     handler: user/update.update
-    name: ${self:custom.namespace}.userUpdate
+    name: ${self:custom.namespace}_userUpdate
     environment:
       TABLE_NAME: ${self:custom.userTable}
     events:
