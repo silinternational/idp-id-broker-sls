@@ -28,7 +28,7 @@ module.exports.create = (event, context, callback) => {
         "code": 0,
         "status": 422
       })
-    );
+    });
     return;
   }
   const params = {
