@@ -6,6 +6,8 @@ provider:
   name: aws
   runtime: nodejs6.10
   memorySize: 512
+  apiKeys:
+    - ${self:custom.namespace}_sync
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -19,7 +21,8 @@ provider:
       Resource: "arn:aws:dynamodb:us-east-1:*:*"
 
 custom:
-  namespace: ${env:IDP_NAME}_${self:service}_${opt:stage, self:provider.stage}
+  stage: ${opt:stage, self:provider.stage}
+  namespace: ${env:IDP_NAME}_${self:service}_${self:custom.stage}
   userTable: ${self:custom.namespace}_user
 
 functions:
@@ -33,6 +36,7 @@ functions:
           path: user
           method: post
           cors: true
+          private: true
   userDelete:
     handler: user/delete.delete
     name: ${self:custom.namespace}_userDelete
@@ -43,6 +47,7 @@ functions:
           path: user/{id}
           method: delete
           cors: true
+          private: true
   userGet:
     handler: user/get.get
     name: ${self:custom.namespace}_userGet
@@ -53,6 +58,7 @@ functions:
           path: user/{id}
           method: get
           cors: true
+          private: true
   userList:
     handler: user/list.list
     name: ${self:custom.namespace}_userList
@@ -63,6 +69,7 @@ functions:
           path: user
           method: get
           cors: true
+          private: true
   userUpdate:
     handler: user/update.update
     name: ${self:custom.namespace}_userUpdate
@@ -73,6 +80,7 @@ functions:
           path: user/{id}
           method: put
           cors: true
+          private: true
 
 resources:
   Resources:
