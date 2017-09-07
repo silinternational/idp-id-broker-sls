@@ -1,6 +1,6 @@
 const errorNames = {
-  400: 'Bad Request'
-  422: 'Unprocessable Entity'
+  400: 'Bad Request',
+  422: 'Unprocessable Entity',
   500: 'Internal Server Error'
 };
 
