@@ -4,7 +4,7 @@ const AWS = require('aws-sdk');
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 const response = require('../helpers/response.js');
 
-module.exports.getUser = (employeeId, callback) => {
+const getUser = (employeeId, callback) => {
   const params = {
     TableName: process.env.TABLE_NAME,
     Key: {
@@ -16,8 +16,9 @@ module.exports.getUser = (employeeId, callback) => {
     callback(error, result.Item);
   });
 };
+module.exports.getUser = getUser;
 
-module.exports.returnUser = (employeeId, callback) => {
+const returnUser = (employeeId, callback) => {
   getUser(event.pathParameters.employee_id, (error, user) => {
     if (error) {
       console.error(error);
@@ -26,3 +27,4 @@ module.exports.returnUser = (employeeId, callback) => {
     response.returnItem(user, callback);
   });
 };
+module.exports.returnUser = returnUser;
