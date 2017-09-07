@@ -1,24 +1,7 @@
 'use strict';
 
-const AWS = require('aws-sdk');
-const dynamoDb = new AWS.DynamoDB.DocumentClient();
-const response = require('../helpers/response.js');
+const returnUser = require('../models/user.js').returnUser;
 
 module.exports.get = (event, context, callback) => {
-  const params = {
-    TableName: process.env.TABLE_NAME,
-    Key: {
-      employee_id: event.pathParameters.employee_id
-    }
-  };
-  
-  dynamoDb.get(params, (error, result) => {
-    if (error) {
-      console.error(error);
-      callback(new Error('Could not get user.'));
-      return;
-    }
-    
-    response.returnItem(result.Item, callback);
-  });
-}
+  returnUser(event.pathParameters.employee_id, callback);
+};
