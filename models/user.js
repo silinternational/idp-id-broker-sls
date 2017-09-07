@@ -52,16 +52,10 @@ const createAndReturnUser = (requestBody, callback) => {
   }
   dynamoDb.put(params, (error, result) => {
     if (error) {
-      console.error(error);
-      callback(new Error('Could not create the user.'));
+      response.returnServerError(error, callback);
       return;
     }
-    
-    const response = {
-      statusCode: 200,
-      body: JSON.stringify(result.Item)
-    }
-    callback(null, response);
+    response.returnItem(result.Item, callback);
   });
 };
 module.exports.createAndReturnUser = createAndReturnUser;
