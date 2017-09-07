@@ -19,7 +19,7 @@ const getUser = (employeeId, callback) => {
 module.exports.getUser = getUser;
 
 const returnUser = (employeeId, callback) => {
-  getUser(event.pathParameters.employee_id, (error, user) => {
+  getUser(employeeId, (error, user) => {
     if (error) {
       console.error(error);
       response.returnError(error, callback);
