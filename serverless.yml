@@ -19,12 +19,13 @@ provider:
       Resource: "arn:aws:dynamodb:us-east-1:*:*"
 
 custom:
-  tableNamespace: ${env:IDP_NAME}.idp-id-broker.${opt:stage, self:provider.stage}
-  userTable: ${self:custom.tableNamespace}.user
+  namespace: ${env:IDP_NAME}.${self:service.name}.${opt:stage, self:provider.stage}
+  userTable: ${self:custom.namespace}.user
 
 functions:
   userCreate:
     handler: user/create.create
+    name: ${self:custom.namespace}.userCreate
     environment:
       TABLE_NAME: ${self:custom.userTable}
     events:
@@ -34,6 +35,7 @@ functions:
           cors: true
   userDelete:
     handler: user/delete.delete
+    name: ${self:custom.namespace}.userDelete
     environment:
       TABLE_NAME: ${self:custom.userTable}
     events:
@@ -43,6 +45,7 @@ functions:
           cors: true
   userGet:
     handler: user/get.get
+    name: ${self:custom.namespace}.userGet
     environment:
       TABLE_NAME: ${self:custom.userTable}
     events:
@@ -52,6 +55,7 @@ functions:
           cors: true
   userList:
     handler: user/list.list
+    name: ${self:custom.namespace}.userList
     environment:
       TABLE_NAME: ${self:custom.userTable}
     events:
@@ -61,6 +65,7 @@ functions:
           cors: true
   userUpdate:
     handler: user/update.update
+    name: ${self:custom.namespace}.userUpdate
     environment:
       TABLE_NAME: ${self:custom.userTable}
     events:
