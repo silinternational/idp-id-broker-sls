@@ -20,7 +20,15 @@ module.exports.create = (event, context, callback) => {
   }
   if (typeof data.employee_id !== 'string') {
     console.error('Validation failed: employee_id is not a string.');
-    callback(new Error('Could not create the user.'));
+    callback(null, {
+      statusCode: 422,
+      body: JSON.stringify({
+        "name": "Unprocessable entity",
+        "message": "Employee ID must be a string",
+        "code": 0,
+        "status": 422
+      })
+    );
     return;
   }
   const params = {
